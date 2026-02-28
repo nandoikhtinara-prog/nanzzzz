@@ -39,7 +39,6 @@
             margin: 25px 0;
             min-height: 1.5em;
             line-height: 1.6;
-            transition: opacity 0.5s ease;
         }
 
         .active-line {
@@ -52,7 +51,6 @@
             opacity: 0.3;
         }
 
-        /* Overlay Tombol Mulai yang Lebih Kuat */
         #overlay {
             position: fixed;
             top: 0;
@@ -85,7 +83,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Animasi Love */
         .heart {
             position: fixed;
             bottom: -50px;
@@ -104,7 +101,7 @@
 <body>
 
     <div id="overlay" onclick="mulaiLagu()">
-        <button class="btn-mulai">KLIK DI SINI ❤️</button>
+        <button class="btn-mulai">KLIK UNTUK MULAI ❤️</button>
     </div>
 
     <audio id="audioTrack" preload="auto">
@@ -128,27 +125,28 @@
             { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 59000, speed: 130 },
             { text: "Biarkan aku mencintaimu dengan caraku", time: 68000, speed: 180 },
             { text: "--- INSTRUMEN ---", time: 78000, speed: 120 },
-            { text: "Tak mengerti mengapa engkau membisu", time: 93500, speed: 180 },
-            { text: "Kau tak lagi sama engkau bukan engkau", time: 100000, speed: 170 },
-            { text: "Sampai aku ragu untuk menelfonmu", time: 106500, speed: 170 },
-            { text: "Mengertikah kamu aku rindu kamu", time: 110500, speed: 170 },
-            { text: "Walau kau menghapus menghempas diriku mengganti cintaku", time: 115000, speed: 130 },
-            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 120500, speed: 135 },
-            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 129000, speed: 130 },
-            { text: "Biarkan aku mencintaimu dengan caraku", time: 138000, speed: 180 },
-            { text: "Aku tak suka bila kau selalu dekat dengannya", time: 147000, speed: 150 },
-            { text: "Jangan engkau cemburu dia hanya sahabat di kelasku", time: 154000, speed: 150 },
-            { text: "Walau kau menghapus menghempas diriku (mengganti cintaku)", time: 169000, speed: 130 },
-            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 178500, speed: 135 },
-            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 187000, speed: 130 },
-            { text: "Biarkan aku mencintaimu dengan caraku", time: 196000, speed: 180 },
-            { text: "Walau kau menghapus menghempas diriku", time: 204000, speed: 150 },
-            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 211000, speed: 140 },
-            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 220000, speed: 130 },
-            { text: "Biarkan aku mencintaimu dengan caraku", time: 228000, speed: 180 },
-            { text: "Tak usah cemburu aku tak ingin kita berpisah karena ini", time: 238000, speed: 140 },
-            { text: "Biarkan aku selalu mencinta untuk selamanya", time: 247000, speed: 160 },
-            { text: "Selesai ❤️", time: 255000, speed: 250 }
+            // INSTRUMEN CUMA 6 DETIK (78s + 6s = 84s mulai lagi)
+            { text: "Tak mengerti mengapa engkau membisu", time: 84000, speed: 180 },
+            { text: "Kau tak lagi sama engkau bukan engkau", time: 91000, speed: 170 },
+            { text: "Sampai aku ragu untuk menelfonmu", time: 97500, speed: 170 },
+            { text: "Mengertikah kamu aku rindu kamu", time: 101500, speed: 170 },
+            { text: "Walau kau menghapus menghempas diriku mengganti cintaku", time: 106000, speed: 130 },
+            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 111500, speed: 135 },
+            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 120000, speed: 130 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 129000, speed: 180 },
+            { text: "Aku tak suka bila kau selalu dekat dengannya", time: 138000, speed: 150 },
+            { text: "Jangan engkau cemburu dia hanya sahabat di kelasku", time: 145000, speed: 150 },
+            { text: "Walau kau menghapus menghempas diriku (mengganti cintaku)", time: 160000, speed: 130 },
+            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 169500, speed: 135 },
+            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 178000, speed: 130 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 187000, speed: 180 },
+            { text: "Walau kau menghapus menghempas diriku", time: 195000, speed: 150 },
+            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 202000, speed: 140 },
+            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 211000, speed: 130 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 219000, speed: 180 },
+            { text: "Tak usah cemburu aku tak ingin kita berpisah karena ini", time: 229000, speed: 140 },
+            { text: "Biarkan aku selalu mencinta untuk selamanya", time: 238000, speed: 160 },
+            { text: "Selesai ❤️", time: 246000, speed: 250 }
         ];
 
         function createHeart() {
@@ -190,14 +188,11 @@
 
         function mulaiLagu() {
             overlay.style.display = 'none';
-            audio.play().then(() => {
-                lyrics.forEach((item) => {
-                    setTimeout(() => {
-                        showLine(item);
-                    }, item.time);
-                });
-            }).catch(error => {
-                console.log("Musik gagal jalan:", error);
+            audio.play();
+            lyrics.forEach((item) => {
+                setTimeout(() => {
+                    showLine(item);
+                }, item.time);
             });
         }
     </script>
