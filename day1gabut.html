@@ -30,6 +30,7 @@
             text-align: center;
             margin-top: 100px;
             margin-bottom: 250px;
+            z-index: 2;
         }
 
         .line {
@@ -53,43 +54,66 @@
         #controls {
             position: fixed;
             bottom: 40px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             padding: 15px 35px;
             border-radius: 50px;
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid var(--primary-color);
             z-index: 1000;
+            cursor: pointer;
         }
 
-        button {
+        #startBtn {
             background: none;
             border: none;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             cursor: pointer;
             font-weight: bold;
             letter-spacing: 1px;
+        }
+
+        /* Animasi Love Melayang */
+        .heart {
+            position: fixed;
+            bottom: -50px;
+            font-size: 20px;
+            color: var(--primary-color);
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 4s linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
 
-    <audio id="audioTrack">
+    <audio id="audioTrack" preload="auto">
         <source src="3d777d3e81e3a287e449c6cd66e90623.mp3" type="audio/mpeg">
     </audio>
 
     <div id="lyrics-box"></div>
 
-    <div id="controls">
-        <button id="startBtn">KLIK UNTUK MULAI 🎵</button>
+    <div id="controls" onclick="mulaiLagu()">
+        <button id="startBtn">MULAI & ❤️</button>
     </div>
 
     <script>
         const lyricsBox = document.getElementById('lyrics-box');
-        const startBtn = document.getElementById('startBtn');
+        const controls = document.getElementById('controls');
         const audio = document.getElementById('audioTrack');
 
-        // Nilai speed saya naikkan lagi sedikit agar muncul per huruf lebih pelan
         const lyrics = [
             { text: "Tak mengerti apa yang telah terjadi", time: 13000, speed: 180 },
             { text: "Kau tak lagi sama engkau bukan engkau", time: 19500, speed: 170 },
@@ -123,6 +147,16 @@
             { text: "Selesai ❤️", time: 255000, speed: 250 }
         ];
 
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
         async function typeWriterEffect(text, element, speed) {
             for (let i = 0; i < text.length; i++) {
                 element.innerHTML += text.charAt(i);
@@ -141,6 +175,11 @@
             div.className = "line active-line";
             lyricsBox.appendChild(div);
 
+            // Bikin efek love muncul saat lirik baru keluar
+            for(let i=0; i<5; i++) {
+                setTimeout(createHeart, i * 150);
+            }
+
             window.scrollTo({
                 top: div.offsetTop - 200,
                 behavior: 'smooth'
@@ -149,8 +188,8 @@
             await typeWriterEffect(item.text, div, item.speed);
         }
 
-        startBtn.addEventListener('click', () => {
-            startBtn.style.display = 'none';
+        function mulaiLagu() {
+            controls.style.display = 'none';
             audio.play();
 
             lyrics.forEach((item) => {
@@ -158,7 +197,7 @@
                     showLine(item);
                 }, item.time);
             });
-        });
+        }
     </script>
 </body>
 </html>
