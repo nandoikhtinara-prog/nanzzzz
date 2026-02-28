@@ -22,6 +22,7 @@
             min-height: 100vh;
             padding: 20px;
             overflow-x: hidden;
+            position: relative;
         }
 
         #lyrics-box {
@@ -30,7 +31,7 @@
             text-align: center;
             margin-top: 100px;
             margin-bottom: 250px;
-            z-index: 2;
+            z-index: 10;
         }
 
         .line {
@@ -38,6 +39,7 @@
             margin: 25px 0;
             min-height: 1.5em;
             line-height: 1.6;
+            transition: opacity 0.5s ease;
         }
 
         .active-line {
@@ -48,56 +50,62 @@
 
         .past-line {
             opacity: 0.3;
-            transition: opacity 1s ease;
         }
 
-        #controls {
+        /* Overlay Tombol Mulai yang Lebih Kuat */
+        #overlay {
             position: fixed;
-            bottom: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px 35px;
-            border-radius: 50px;
-            backdrop-filter: blur(15px);
-            border: 2px solid var(--primary-color);
-            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
             cursor: pointer;
         }
 
-        #startBtn {
-            background: none;
-            border: none;
+        .btn-mulai {
+            background: var(--primary-color);
             color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.5rem;
             font-weight: bold;
-            letter-spacing: 1px;
+            border: none;
+            box-shadow: 0 0 20px var(--primary-color);
+            animation: pulse 1.5s infinite;
         }
 
-        /* Animasi Love Melayang */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Animasi Love */
         .heart {
             position: fixed;
             bottom: -50px;
-            font-size: 20px;
-            color: var(--primary-color);
-            user-select: none;
+            font-size: 24px;
             pointer-events: none;
             z-index: 1;
             animation: floatUp 4s linear forwards;
         }
 
         @keyframes floatUp {
-            0% {
-                transform: translateY(0) translateX(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px) rotate(360deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
+
+    <div id="overlay" onclick="mulaiLagu()">
+        <button class="btn-mulai">KLIK DI SINI ❤️</button>
+    </div>
 
     <audio id="audioTrack" preload="auto">
         <source src="3d777d3e81e3a287e449c6cd66e90623.mp3" type="audio/mpeg">
@@ -105,14 +113,10 @@
 
     <div id="lyrics-box"></div>
 
-    <div id="controls" onclick="mulaiLagu()">
-        <button id="startBtn">MULAI & ❤️</button>
-    </div>
-
     <script>
         const lyricsBox = document.getElementById('lyrics-box');
-        const controls = document.getElementById('controls');
         const audio = document.getElementById('audioTrack');
+        const overlay = document.getElementById('overlay');
 
         const lyrics = [
             { text: "Tak mengerti apa yang telah terjadi", time: 13000, speed: 180 },
@@ -150,8 +154,9 @@
         function createHeart() {
             const heart = document.createElement('div');
             heart.className = 'heart';
-            heart.innerHTML = '❤️';
+            heart.innerHTML = ['❤️', '💖', '💘', '💕'][Math.floor(Math.random() * 4)];
             heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
             heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 5000);
@@ -175,27 +180,24 @@
             div.className = "line active-line";
             lyricsBox.appendChild(div);
 
-            // Bikin efek love muncul saat lirik baru keluar
-            for(let i=0; i<5; i++) {
-                setTimeout(createHeart, i * 150);
+            for(let i=0; i<8; i++) {
+                setTimeout(createHeart, i * 200);
             }
 
-            window.scrollTo({
-                top: div.offsetTop - 200,
-                behavior: 'smooth'
-            });
-
+            window.scrollTo({ top: div.offsetTop - 200, behavior: 'smooth' });
             await typeWriterEffect(item.text, div, item.speed);
         }
 
         function mulaiLagu() {
-            controls.style.display = 'none';
-            audio.play();
-
-            lyrics.forEach((item) => {
-                setTimeout(() => {
-                    showLine(item);
-                }, item.time);
+            overlay.style.display = 'none';
+            audio.play().then(() => {
+                lyrics.forEach((item) => {
+                    setTimeout(() => {
+                        showLine(item);
+                    }, item.time);
+                });
+            }).catch(error => {
+                console.log("Musik gagal jalan:", error);
             });
         }
     </script>
