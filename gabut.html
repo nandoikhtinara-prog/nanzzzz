@@ -116,37 +116,41 @@
         const overlay = document.getElementById('overlay');
 
         const lyrics = [
-            // Mulai di detik 15 (15000ms)
-            { text: "Tak mengerti apa yang telah terjadi", time: 15000, speed: 180 },
-            { text: "Kau tak lagi sama engkau bukan engkau", time: 21500, speed: 170 },
-            { text: "Yang selalu mencari dan menelfonku", time: 28500, speed: 170 },
-            { text: "Dering darimu tak ada lagi", time: 35500, speed: 190 },
-            { text: "Walau kau menghapus menghempas diriku mengganti cintaku", time: 43500, speed: 130 },
-            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 53000, speed: 135 },
-            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 61000, speed: 130 },
-            { text: "Biarkan aku mencintaimu dengan caraku", time: 70000, speed: 180 },
-            { text: "--- INSTRUMEN ---", time: 80000, speed: 120 },
-            // Instrumen 6 detik (80s + 6s = 86s mulai lagi)
-            { text: "Tak mengerti mengapa engkau membisu", time: 86000, speed: 180 },
-            { text: "Kau tak lagi sama engkau bukan engkau", time: 93000, speed: 170 },
-            { text: "Sampai aku ragu untuk menelfonmu", time: 99500, speed: 170 },
-            { text: "Mengertikah kamu aku rindu kamu", time: 103500, speed: 170 },
-            { text: "Walau kau menghapus menghempas diriku mengganti cintaku", time: 108000, speed: 130 },
-            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 113500, speed: 135 },
-            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 122000, speed: 130 },
-            { text: "Biarkan aku mencintaimu dengan caraku", time: 131000, speed: 180 },
-            { text: "Aku tak suka bila kau selalu dekat dengannya", time: 140000, speed: 150 },
-            { text: "Jangan engkau cemburu dia hanya sahabat di kelasku", time: 147000, speed: 150 },
-            { text: "Walau kau menghapus menghempas diriku (mengganti cintaku)", time: 162000, speed: 130 },
-            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 171500, speed: 135 },
-            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 180000, speed: 130 },
-            { text: "Biarkan aku mencintaimu dengan caraku", time: 189000, speed: 180 },
-            { text: "Walau kau menghapus menghempas diriku", time: 197000, speed: 150 },
-            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 204000, speed: 140 },
-            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 213000, speed: 130 },
-            { text: "Biarkan aku mencintaimu dengan caraku", time: 221000, speed: 180 },
-            { text: "Tak usah cemburu aku tak ingin kita berpisah karena ini", time: 231000, speed: 140 },
-            { text: "Biarkan aku selalu mencinta untuk selamanya", time: 240000, speed: 160 },
+            // BAIT 1 - Mulai detik 17 agar tidak kecepatan
+            { text: "Tak mengerti apa yang telah terjadi", time: 17000, speed: 200 },
+            { text: "Kau tak lagi sama engkau bukan engkau", time: 23500, speed: 190 },
+            { text: "Yang selalu mencari dan menelfonku", time: 30500, speed: 190 },
+            { text: "Dering darimu tak ada lagi", time: 37500, speed: 210 },
+            { text: "Walau kau menghapus menghempas diriku mengganti cintaku", time: 45500, speed: 140 },
+            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 55000, speed: 145 },
+            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 63000, speed: 140 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 72000, speed: 200 },
+            
+            // INSTRUMEN FIX 6 DETIK (Detik 80 sampai 86)
+            { text: "--- INSTRUMEN ---", time: 80000, speed: 100 },
+            
+            // BAIT 2 - Masuk tepat setelah 6 detik instrumen (Detik 86)
+            { text: "Tak mengerti mengapa engkau membisu", time: 86500, speed: 200 },
+            { text: "Kau tak lagi sama engkau bukan engkau", time: 93000, speed: 190 },
+            { text: "Sampai aku ragu untuk menelfonmu", time: 99500, speed: 190 },
+            { text: "Mengertikah kamu aku rindu kamu", time: 103500, speed: 190 },
+            { text: "Walau kau menghapus menghempas diriku mengganti cintaku", time: 108000, speed: 140 },
+            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 114000, speed: 145 },
+            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 122500, speed: 140 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 131000, speed: 200 },
+            
+            { text: "Aku tak suka bila kau selalu dekat dengannya", time: 140000, speed: 170 },
+            { text: "Jangan engkau cemburu dia hanya sahabat di kelasku", time: 147000, speed: 170 },
+            { text: "Walau kau menghapus menghempas diriku (mengganti cintaku)", time: 162000, speed: 140 },
+            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 171500, speed: 145 },
+            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 180000, speed: 140 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 189000, speed: 200 },
+            { text: "Walau kau menghapus menghempas diriku", time: 197000, speed: 170 },
+            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 204000, speed: 150 },
+            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 213000, speed: 140 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 221000, speed: 200 },
+            { text: "Tak usah cemburu aku tak ingin kita berpisah karena ini", time: 231000, speed: 150 },
+            { text: "Biarkan aku selalu mencinta untuk selamanya", time: 240000, speed: 180 },
             { text: "Selesai ❤️", time: 248000, speed: 250 }
         ];
 
