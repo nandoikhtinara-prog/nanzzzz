@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dengan Caraku - Arsy & Jodie</title>
+    <style>
+        :root {
+            --primary-color: #ff6b81;
+            --bg-color: #0b0b0b;
+            --text-main: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        #lyrics-box {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-top: 100px;
+            margin-bottom: 200px;
+        }
+
+        .line {
+            font-size: 1.4rem;
+            margin: 25px 0;
+            min-height: 1.5em;
+            line-height: 1.6;
+        }
+
+        .active-line {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 107, 129, 0.5);
+        }
+
+        .past-line {
+            opacity: 0.3;
+            transition: opacity 1s ease;
+        }
+
+        #controls {
+            position: fixed;
+            bottom: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 35px;
+            border-radius: 50px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+
+        button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="audioTrack">
+        <source src="0727590513946904234-c.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="lyrics-box"></div>
+
+    <div id="controls">
+        <button id="startBtn">KLIK UNTUK MULAI 🎵</button>
+    </div>
+
+    <script>
+        const lyricsBox = document.getElementById('lyrics-box');
+        const startBtn = document.getElementById('startBtn');
+        const audio = document.getElementById('audioTrack');
+
+        const lyrics = [
+            { text: "Tak mengerti apa yang telah terjadi", time: 13000, speed: 80 },
+            { text: "Kau tak lagi sama, engkau bukan engkau", time: 19500, speed: 80 },
+            { text: "Yang selalu mencari dan meneleponku", time: 26500, speed: 70 },
+            { text: "Dering darimu tak ada lagi", time: 33500, speed: 90 },
+            { text: "Walau kau menghapus, menghempas diriku", time: 41500, speed: 70 },
+            { text: "Mengganti cintaku", time: 47000, speed: 100 },
+            { text: "Semua tak mampu hilangkan cinta", time: 51000, speed: 70 },
+            { text: "Yang telah kau beri", time: 56000, speed: 100 },
+            { text: "Walau kau berubah, aku kan bertahan", time: 59000, speed: 70 },
+            { text: "Di sepanjang waktuku", time: 64500, speed: 90 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 68000, speed: 80 },
+            { text: "--- INSTRUMEN ---", time: 78000, speed: 50 },
+            { text: "Tak mengerti apa yang telah terjadi", time: 94000, speed: 80 },
+            { text: "Kau tak lagi sama, engkau bukan engkau", time: 101000, speed: 80 },
+            { text: "Walau kau menghapus, menghempas diriku", time: 111000, speed: 70 },
+            { text: "Mengganti cintaku", time: 116500, speed: 100 },
+            { text: "Semua tak mampu hilangkan cinta", time: 120500, speed: 70 },
+            { text: "Yang telah kau beri", time: 126000, speed: 100 },
+            { text: "Walau kau berubah, aku kan bertahan", time: 129000, speed: 70 },
+            { text: "Di sepanjang waktuku", time: 134500, speed: 90 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 138000, speed: 80 },
+            { text: "Karna dirimu... hmmm", time: 152000, speed: 100 },
+            { text: "Sangat berarti untukku...", time: 158000, speed: 100 },
+            { text: "Walau kau menghapus, menghempas diriku", time: 169000, speed: 70 },
+            { text: "Mengganti cintaku", time: 174500, speed: 100 },
+            { text: "Semua tak mampu hilangkan cinta", time: 178500, speed: 70 },
+            { text: "Yang telah kau beri", time: 184000, speed: 100 },
+            { text: "Walau kau berubah, aku kan bertahan", time: 187000, speed: 70 },
+            { text: "Di sepanjang waktuku", time: 192000, speed: 90 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 196000, speed: 80 },
+            { text: "Mencintaimu... dengan caraku...", time: 206000, speed: 100 },
+            { text: "Selesai ❤️", time: 215000, speed: 100 }
+        ];
+
+        async function typeWriterEffect(text, element, speed) {
+            for (let i = 0; i < text.length; i++) {
+                element.innerHTML += text.charAt(i);
+                await new Promise(res => setTimeout(res, speed));
+            }
+        }
+
+        async function showLine(item) {
+            const oldLines = document.querySelectorAll('.line');
+            oldLines.forEach(l => {
+                l.classList.remove('active-line');
+                l.classList.add('past-line');
+            });
+
+            const div = document.createElement('div');
+            div.className = "line active-line";
+            lyricsBox.appendChild(div);
+
+            // Auto-scroll
+            window.scrollTo({
+                top: div.offsetTop - 200,
+                behavior: 'smooth'
+            });
+
+            await typeWriterEffect(item.text, div, item.speed);
+        }
+
+        startBtn.addEventListener('click', () => {
+            startBtn.style.display = 'none';
+            audio.play();
+
+            lyrics.forEach((item) => {
+                setTimeout(() => {
+                    showLine(item);
+                }, item.time);
+            });
+        });
+    </script>
+</body>
+</html>
