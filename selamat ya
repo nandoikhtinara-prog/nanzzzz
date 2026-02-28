@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ucapan Idul Fitri</title>
+    <style>
+        :root {
+            --gold: #ffd700;
+            --green-dark: #064e3b;
+            --green-light: #10b981;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background: radial-gradient(circle at center, var(--green-dark) 0%, #000 100%);
+            color: white; font-family: 'Segoe UI', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; overflow: hidden;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 30px; border-radius: 25px;
+            border: 2px solid var(--gold);
+            width: 90%; max-width: 400px;
+            z-index: 10; text-align: center;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        h1 { color: var(--gold); font-size: 1.8rem; margin-bottom: 5px; }
+        .subtitle { color: var(--green-light); margin-bottom: 20px; font-weight: bold; }
+        
+        .choice-box { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+
+        .btn {
+            padding: 12px; border-radius: 50px; border: none;
+            font-weight: bold; cursor: pointer; transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn-yes { background: var(--gold); color: var(--green-dark); }
+        .btn-no { background: rgba(255,255,255,0.2); color: white; }
+        .btn:hover { transform: scale(1.05); }
+
+        #form-section, #thanks-msg { display: none; animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        input, textarea {
+            width: 100%; padding: 12px; margin-bottom: 10px;
+            border-radius: 10px; border: none; box-sizing: border-box;
+            background: #f9f9f9; color: #333;
+        }
+
+        .floating { position: fixed; font-size: 25px; pointer-events: none; z-index: 1; animation: floatUp 5s linear forwards; }
+        @keyframes floatUp { 0% { transform: translateY(110vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div style="font-size: 50px;">🕌</div>
+        <h1>Selamat Idul Fitri</h1>
+        <div class="subtitle">1 Syawal 1447 H</div>
+        <p>Mohon Maaf Lahir & Batin</p>
+
+        <div id="choice-section" class="choice-box">
+            <p>Mau titip ucapan balik?</p>
+            <button class="btn btn-yes" onclick="showForm()">Tulis Ucapan ✨</button>
+            <button class="btn btn-no" onclick="showThanks()">Cukup Lihat Saja 😊</button>
+        </div>
+
+        <div id="form-section">
+            <form action="https://formsubmit.co/Nandoikhtinara@gmail.com" method="POST">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://nandoikhtinara-prog.github.io/nanzzzz/idulfitri.html">
+                
+                <input type="text" name="Nama" placeholder="Nama Anda" required>
+                <textarea name="Pesan" placeholder="Tulis pesan maaf/ucapan..." required></textarea>
+                <button type="submit" class="btn btn-yes" style="width: 100%;">Kirim Pesan 🚀</button>
+            </form>
+            <button onclick="goBack()" style="background:none; border:none; color:white; font-size:0.8rem; margin-top:10px; cursor:pointer;">Kembali</button>
+        </div>
+
+        <div id="thanks-msg">
+            <p>Terima kasih sudah berkunjung! <br> Selamat merayakan hari kemenangan ✨</p>
+            <button onclick="goBack()" class="btn btn-no" style="width: 50%;">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        function showForm() {
+            document.getElementById('choice-section').style.display = 'none';
+            document.getElementById('form-section').style.display = 'block';
+        }
+        function showThanks() {
+            document.getElementById('choice-section').style.display = 'none';
+            document.getElementById('thanks-msg').style.display = 'block';
+        }
+        function goBack() {
+            document.getElementById('form-section').style.display = 'none';
+            document.getElementById('thanks-msg').style.display = 'none';
+            document.getElementById('choice-section').style.display = 'flex';
+        }
+        setInterval(() => {
+            const emojis = ['🌙', '⭐', '✨', '🕌', '🏮', '💚'];
+            const el = document.createElement('div');
+            el.className = 'floating';
+            el.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 5000);
+        }, 500);
+    </script>
+</body>
+</html>
