@@ -83,18 +83,19 @@
             100% { transform: scale(1); }
         }
 
+        /* Animasi Love Melayang */
         .heart {
             position: fixed;
             bottom: -50px;
-            font-size: 24px;
             pointer-events: none;
             z-index: 1;
             animation: floatUp 4s linear forwards;
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
     </style>
 </head>
@@ -116,7 +117,6 @@
         const overlay = document.getElementById('overlay');
 
         const lyrics = [
-            // BAIT 1 - Mulai detik 17 agar tidak kecepatan
             { text: "Tak mengerti apa yang telah terjadi", time: 17000, speed: 200 },
             { text: "Kau tak lagi sama engkau bukan engkau", time: 23500, speed: 190 },
             { text: "Yang selalu mencari dan menelfonku", time: 30500, speed: 190 },
@@ -125,44 +125,41 @@
             { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 55000, speed: 145 },
             { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 63000, speed: 140 },
             { text: "Biarkan aku mencintaimu dengan caraku", time: 72000, speed: 200 },
-            
-            // INSTRUMEN FIX 6 DETIK (Detik 80 sampai 86)
             { text: "--- INSTRUMEN ---", time: 80000, speed: 100 },
-            
-            // BAIT 2 - Masuk tepat setelah 6 detik instrumen (Detik 86)
             { text: "Tak mengerti mengapa engkau membisu", time: 86500, speed: 200 },
             { text: "Kau tak lagi sama engkau bukan engkau", time: 93000, speed: 190 },
-            { text: "Sampai aku ragu untuk menelfonmu", time: 99500, speed: 190 },
-            { text: "Mengertikah kamu aku rindu kamu", time: 103500, speed: 190 },
-            { text: "Walau kau menghapus menghempas diriku mengganti cintaku", time: 108000, speed: 140 },
-            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 114000, speed: 145 },
-            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 122500, speed: 140 },
-            { text: "Biarkan aku mencintaimu dengan caraku", time: 131000, speed: 200 },
-            
-            { text: "Aku tak suka bila kau selalu dekat dengannya", time: 140000, speed: 170 },
-            { text: "Jangan engkau cemburu dia hanya sahabat di kelasku", time: 147000, speed: 170 },
-            { text: "Walau kau menghapus menghempas diriku (mengganti cintaku)", time: 162000, speed: 140 },
-            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 171500, speed: 145 },
-            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 180000, speed: 140 },
-            { text: "Biarkan aku mencintaimu dengan caraku", time: 189000, speed: 200 },
-            { text: "Walau kau menghapus menghempas diriku", time: 197000, speed: 170 },
-            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 204000, speed: 150 },
-            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 213000, speed: 140 },
-            { text: "Biarkan aku mencintaimu dengan caraku", time: 221000, speed: 200 },
-            { text: "Tak usah cemburu aku tak ingin kita berpisah karena ini", time: 231000, speed: 150 },
-            { text: "Biarkan aku selalu mencinta untuk selamanya", time: 240000, speed: 180 },
-            { text: "Selesai ❤️", time: 248000, speed: 250 }
+            { text: "Sampai aku ragu untuk menelfonmu", time: 101500, speed: 190 },
+            { text: "Mengertikah kamu aku rindu kamu", time: 106500, speed: 190 },
+            { text: "Walau kau menghapus menghempas diriku mengganti cintaku", time: 112000, speed: 140 },
+            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 119000, speed: 145 },
+            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 127500, speed: 140 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 137000, speed: 200 },
+            { text: "Aku tak suka bila kau selalu dekat dengannya", time: 146000, speed: 170 },
+            { text: "Jangan engkau cemburu dia hanya sahabat di kelasku", time: 153000, speed: 170 },
+            { text: "Walau kau menghapus menghempas diriku (mengganti cintaku)", time: 168000, speed: 140 },
+            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 177500, speed: 145 },
+            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 186000, speed: 140 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 195000, speed: 200 },
+            { text: "Walau kau menghapus menghempas diriku", time: 203000, speed: 170 },
+            { text: "Semua tak mampu hilangkan cinta yang telah kau beri", time: 210000, speed: 150 },
+            { text: "Walau kau berubah aku kan bertahan di sepanjang waktuku", time: 219000, speed: 140 },
+            { text: "Biarkan aku mencintaimu dengan caraku", time: 227000, speed: 200 },
+            { text: "Tak usah cemburu aku tak ingin kita berpisah karena ini", time: 237000, speed: 150 },
+            { text: "Biarkan aku selalu mencinta untuk selamanya", time: 246000, speed: 180 },
+            { text: "Selesai ❤️", time: 254000, speed: 250 }
         ];
 
         function createHeart() {
             const heart = document.createElement('div');
             heart.className = 'heart';
-            heart.innerHTML = ['❤️', '💖', '💘', '💕'][Math.floor(Math.random() * 4)];
+            heart.innerHTML = ['❤️', '💖', '💘', '💕', '✨', '🌹'][Math.floor(Math.random() * 6)];
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
-            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            heart.style.fontSize = (Math.random() * 30 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            // Variasi transparansi biar estetik
+            heart.style.opacity = Math.random() * 0.5 + 0.5;
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
+            setTimeout(() => heart.remove(), 4000);
         }
 
         async function typeWriterEffect(text, element, speed) {
@@ -183,8 +180,9 @@
             div.className = "line active-line";
             lyricsBox.appendChild(div);
 
-            for(let i=0; i<8; i++) {
-                setTimeout(createHeart, i * 200);
+            // JUMLAH EMOT DIPERBANYAK (Sekarang muncul 25 emot sekaligus per lirik)
+            for(let i=0; i<25; i++) {
+                setTimeout(createHeart, Math.random() * 2000);
             }
 
             window.scrollTo({ top: div.offsetTop - 200, behavior: 'smooth' });
@@ -194,6 +192,9 @@
         function mulaiLagu() {
             overlay.style.display = 'none';
             audio.play();
+            // Emot tambahan pas klik pertama kali
+            for(let i=0; i<50; i++) { setTimeout(createHeart, i * 50); }
+            
             lyrics.forEach((item) => {
                 setTimeout(() => {
                     showLine(item);
