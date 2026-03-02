@@ -5,97 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pesan Rahasia</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #000; /* Hitam pekat biar misterius */
-            font-family: 'Segoe UI', sans-serif;
-            color: white;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 85%;
-            max-width: 350px;
-            text-align: center;
-        }
-
-        h2 { 
-            margin-bottom: 10px; 
-            font-size: 1.4rem; 
-            background: linear-gradient(to right, #00f2fe, #4facfe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        p { font-size: 0.85rem; opacity: 0.7; margin-bottom: 20px; }
-
-        textarea {
-            width: 100%;
-            height: 150px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: white;
-            font-size: 1rem;
-            resize: none;
-            box-sizing: border-box;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        textarea:focus { border-color: #00f2fe; box-shadow: 0 0 10px rgba(0, 242, 254, 0.3); }
-
-        .btn {
-            margin-top: 20px;
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(45deg, #00f2fe, #4facfe);
-            color: #000;
-            border: none;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-
-        .btn:hover { transform: scale(1.03); opacity: 0.9; }
-
-        /* Hiasan titik-titik di background */
-        .dots {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; background-image: radial-gradient(#ffffff10 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
+        body { background: #000; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { width: 90%; max-width: 400px; background: #111; padding: 30px; border-radius: 20px; border: 1px solid #333; text-align: center; }
+        textarea { width: 100%; height: 150px; background: #222; border: 1px solid #444; border-radius: 10px; color: white; padding: 15px; margin: 15px 0; resize: none; outline: none; }
+        button { width: 100%; padding: 15px; background: white; color: black; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:disabled { background: #555; cursor: not-allowed; }
+        .status { margin-top: 10px; font-size: 0.9rem; display: none; }
     </style>
 </head>
 <body>
 
-    <div class="dots"></div>
-
     <div class="card">
-        <h2>Kirim Pesan Anonim 🤫</h2>
-        <p>Tulis apa saja di sini tanpa diketahui siapa pengirimnya.</p>
+        <h1>Kirim Pesan Rahasia</h1>
+        <p>Identitasmu tetap aman dan anonim.</p>
         
-        <form action="https://formsubmit.co/Nandoikhtinara@gmail.com" method="POST">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_subject" value="Pesan Anonim Baru!">
-            
-            <textarea name="Isi_Pesan" placeholder="Ketik rahasia atau pesanmu..." required></textarea>
-            
-            <button type="submit" class="btn">Kirim Sekarang 🚀</button>
+        <form id="pesanForm">
+            <textarea id="isiPesan" name="Pesan" placeholder="Tulis pesanmu di sini..." required></textarea>
+            <button type="submit" id="btnKirim">KIRIM SEKARANG</button>
         </form>
+        <div id="notif" class="status"></div>
     </div>
+
+    <script>
+        const form = document.getElementById('pesanForm');
+        const btn = document.getElementById('btnKirim');
+        const notif = document.getElementById('notif');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah pindah halaman ke FormSubmit
+            
+            btn.disabled = true;
+            btn.innerText = "MENGIRIM...";
+
+            const formData = new FormData(form);
+
+            fetch("https://formsubmit.co/ajax/Nandoikhtinara@gmail.com", {
+                method: "POST",
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Berhasil! Pesan rahasiamu sudah terkirim.");
+                    form.reset();
+                } else {
+                    alert("Gagal mengirim pesan.");
+                }
+            })
+            .catch(error => {
+                alert("Terjadi kesalahan koneksi.");
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerText = "KIRIM SEKARANG";
+            });
+        });
+    </script>
 
 </body>
 </html>
