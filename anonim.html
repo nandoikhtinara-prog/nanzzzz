@@ -7,60 +7,38 @@
     <style>
         body { background: #000; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .card { width: 90%; max-width: 400px; background: #111; padding: 30px; border-radius: 20px; border: 1px solid #333; text-align: center; }
-        h1 { font-size: 1.5rem; margin-bottom: 5px; }
-        p { color: #888; font-size: 0.9rem; margin-bottom: 20px; }
         textarea { width: 100%; height: 160px; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; color: white; padding: 15px; margin-bottom: 15px; resize: none; outline: none; font-size: 1rem; }
-        button { width: 100%; padding: 15px; background: white; color: black; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:disabled { background: #555; cursor: not-allowed; }
+        .btn { width: 100%; padding: 15px; background: white; color: black; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; display: inline-block; text-decoration: none; margin-top: 10px; }
+        
+        /* Gaya untuk pesan sukses */
+        .sukses-container { display: none; }
+        #target:target { display: block; }
+        #target:target ~ #form-utama { display: none; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h1>Kirim Pesan Rahasia</h1>
-        <p>Aman & 100% Anonim.</p>
+        <div id="target" class="sukses-container">
+            <h1 style="font-size: 2rem;">ありがとう</h1>
+            <p style="color: #888; margin-bottom: 20px;">Pesan rahasiamu sudah terkirim!</p>
+            <a href="https://google.com" class="btn">KELUAR</a>
+        </div>
 
-        <form id="formAnonim">
-            <textarea id="isiPesan" placeholder="Ketik pesanmu di sini..." required></textarea>
-            <button type="submit" id="btnKirim">KIRIM SEKARANG</button>
-        </form>
+        <div id="form-utama">
+            <h1>Kirim Pesan Rahasia</h1>
+            <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px;">100% Anonim & Aman.</p>
+
+            <form action="https://formsubmit.co/Nandoikhtinara@gmail.com" method="POST">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <input type="hidden" name="_next" value="https://nandoikhtinara-prog.github.io/nanzzzz/anonim.html#target">
+
+                <textarea name="Pesan" placeholder="Ketik di sini..." required></textarea>
+                <button type="submit" class="btn">KIRIM SEKARANG</button>
+            </form>
+        </div>
     </div>
-
-    <script>
-        const form = document.getElementById('formAnonim');
-        const btn = document.getElementById('btnKirim');
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const pesan = document.getElementById('isiPesan').value;
-            btn.disabled = true;
-            btn.innerText = "MENGIRIM...";
-
-            // Kirim data secara diam-diam (AJAX)
-            fetch("https://formsubmit.co/ajax/Nandoikhtinara@gmail.com", {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify({
-                    Pesan: pesan,
-                    _captcha: "false"
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert("Berhasil! Pesan rahasiamu sudah terkirim.");
-                    document.getElementById('isiPesan').value = "";
-                } else {
-                    alert("Gagal mengirim pesan.");
-                }
-            })
-            .catch(error => alert("Kesalahan koneksi."))
-            .finally(() => {
-                btn.disabled = false;
-                btn.innerText = "KIRIM SEKARANG";
-            });
-        });
-    </script>
 
 </body>
 </html>
