@@ -8,33 +8,33 @@
         body { background: #000; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .card { width: 90%; max-width: 400px; background: #111; padding: 30px; border-radius: 20px; border: 1px solid #333; text-align: center; }
         textarea { width: 100%; height: 160px; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; color: white; padding: 15px; margin-bottom: 15px; resize: none; outline: none; font-size: 1rem; }
-        .btn { width: 100%; padding: 15px; background: white; color: black; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; display: inline-block; text-decoration: none; margin-top: 10px; }
+        .btn { width: 100%; padding: 15px; background: white; color: black; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; display: inline-block; text-decoration: none; }
         
-        /* Gaya untuk pesan sukses */
-        .sukses-container { display: none; }
-        #target:target { display: block; }
-        #target:target ~ #form-utama { display: none; }
+        /* Tampilan Terima Kasih (Awalnya Sembunyi) */
+        .sukses-page { display: none; }
+        #arigatou:target { display: block; }
+        #arigatou:target ~ #form-utama { display: none; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <div id="target" class="sukses-container">
-            <h1 style="font-size: 2rem;">ありがとう</h1>
-            <p style="color: #888; margin-bottom: 20px;">Pesan rahasiamu sudah terkirim!</p>
+        <div id="arigatou" class="sukses-page">
+            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">ありがとう</h1>
+            <p style="color: #888; margin-bottom: 30px;">Pesanmu sudah terkirim secara rahasia.</p>
             <a href="https://google.com" class="btn">KELUAR</a>
         </div>
 
         <div id="form-utama">
             <h1>Kirim Pesan Rahasia</h1>
-            <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px;">100% Anonim & Aman.</p>
+            <p style="color: #888; margin-bottom: 20px;">100% Anonim & Aman.</p>
 
             <form action="https://formsubmit.co/Nandoikhtinara@gmail.com" method="POST">
                 <input type="hidden" name="_captcha" value="false">
                 
-                <input type="hidden" name="_next" value="https://nandoikhtinara-prog.github.io/nanzzzz/anonim.html#target">
+                <input type="hidden" name="_next" value="https://nandoikhtinara-prog.github.io/nanzzzz/anonim.html#arigatou">
 
-                <textarea name="Pesan" placeholder="Ketik di sini..." required></textarea>
+                <textarea name="Pesan" placeholder="Ketik pesan di sini..." required></textarea>
                 <button type="submit" class="btn">KIRIM SEKARANG</button>
             </form>
         </div>
