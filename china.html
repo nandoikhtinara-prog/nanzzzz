@@ -3,16 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karaoke Mode - 做自己的光</title>
+    <title>Karaoke - 做自己的光</title>
     <style>
-        :root {
-            --primary-color: #00d2ff;
-            --bg-dark: #0f0c29;
-        }
-
         body {
             margin: 0;
-            background: var(--bg-dark);
+            background: #050505;
             color: white;
             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
             display: flex;
@@ -22,58 +17,48 @@
             overflow: hidden;
         }
 
-        .header {
-            margin-top: 30px;
-            text-align: center;
-        }
-
         .lyric-container {
             flex: 1;
-            width: 90%;
-            max-width: 600px;
-            overflow-y: hidden;
-            margin: 40px 0;
-            position: relative;
-            mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            mask-image: linear-gradient(to bottom, transparent, black 40%, black 60%, transparent);
         }
 
         #lyric-list {
-            position: absolute;
-            width: 100%;
-            top: 50%;
-            transition: transform 0.4s ease-out;
+            transition: transform 0.3s ease-out;
             text-align: center;
         }
 
         .lyric-line {
-            padding: 15px 0;
-            font-size: 1.2rem;
-            opacity: 0.3;
-            transition: all 0.3s;
+            padding: 20px 0;
+            font-size: 1.4rem;
+            opacity: 0.2;
+            transition: all 0.4s;
         }
 
         .lyric-line.active {
             opacity: 1;
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            text-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+            font-size: 2.2rem;
+            color: #ffcc00; /* Warna emas agar seperti cahaya */
+            text-shadow: 0 0 20px rgba(255, 204, 0, 0.6);
         }
 
         .pinyin {
             display: block;
-            font-size: 0.8rem;
-            margin-bottom: 5px;
-            opacity: 0.7;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            opacity: 0.6;
         }
 
         .player-box {
-            background: rgba(255, 255, 255, 0.05);
+            background: #111;
             width: 100%;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #333;
         }
 
         audio {
@@ -83,11 +68,6 @@
     </style>
 </head>
 <body>
-
-    <div class="header">
-        <h1 style="margin-bottom: 5px;">做自己的光</h1>
-        <p style="opacity: 0.6;">Be Your Own Light</p>
-    </div>
 
     <div class="lyric-container">
         <div id="lyric-list">
@@ -101,27 +81,27 @@
     </div>
 
     <script>
-        // Data Lirik: [Detik, Pinyin, Mandarin]
         const lyricData = [
-            [0, "Music", "--- Intro ---"],
-            [2, "bù xū yào tài yáng", "不需要太阳"],
-            [5, "shéi shuō yào nì fēng cái suàn fēi xiáng", "谁说要逆风才算飞翔"],
-            [10, "gū dú de lù shàng", "孤独的路上"],
-            [13, "hái yào zǒu hěn cháng", "还要走很长"],
-            [16, "chéng zhǎng ràng zì zūn zài méi yǒu piān fāng", "成长让自尊再没有偏方"],
-            [21, "zuò zì jǐ de guāng", "做自己的光"],
-            [24, "bù xū yào tài liàng", "不需要太亮"],
-            [27, "shéi shuō yào nì fēng cái suàn fēi xiáng", "谁说要逆风才算飞翔"],
-            [31, "gū dú de lù shàng", "孤独的路上"],
-            [34, "hái yào zǒu hěn cháng", "还要走很长"],
-            [37, "chéng zhǎng lái zì bù céng fàng qì de méi mù", "成长来自不曾放弃的每一步"],
-            [42, "zuò zì jǐ de guāng", "做自己的光"]
+            [0.5, "bù xū yào tài yáng", "不需要太阳"],
+            [3.2, "shéi shuō yào nì fēng cái suàn fēi xiáng", "谁说要逆风才算飞翔"],
+            [7.5, "mā ma shuō yào kuài lè", "妈妈说要快乐"],
+            [10.8, "quán méi gào sù wǒ fāng fǎ", "全没告诉我方法"],
+            [14.2, "chéng zhǎng de xiǎo guǐ wéi wǒ", "成长的小鬼为我"],
+            [17.5, "shì dài shì xué bù kě pà", "时代是学不可怕"],
+            [20.8, "kě pà de shì lǐ hái xiāng xìn zhè jù huà", "可怕的是里还相信这句话"],
+            [25.0, "zuò zì jǐ de guāng", "做自己的光"],
+            [28.5, "bù xū yào tài liàng", "不需要太亮"],
+            [31.8, "shéi shuō yào nì fēng cái suàn fēi xiáng", "谁说要逆风才算飞翔"],
+            [35.5, "gū dú de lù shàng", "孤独的路上"],
+            [38.8, "hái yào zǒu hěn cháng", "还要走很长"],
+            [42.2, "chéng zhǎng lái zì bù céng fàng qì de méi mù", "成长来自不曾放弃的每一步"],
+            [46.5, "zuò zì jǐ de guāng", "做自己的光"]
         ];
 
         const lyricList = document.getElementById('lyric-list');
         const audio = document.getElementById('audio');
 
-        // Render lirik ke layar
+        // Render lirik
         lyricData.forEach((item, index) => {
             const div = document.createElement('div');
             div.className = 'lyric-line';
@@ -135,14 +115,15 @@
             
             for (let i = 0; i < lyricData.length; i++) {
                 if (currentTime >= lyricData[i][0] && (!lyricData[i+1] || currentTime < lyricData[i+1][0])) {
-                    // Highlight lirik aktif
                     document.querySelectorAll('.lyric-line').forEach(el => el.classList.remove('active'));
                     const currentLine = document.getElementById(`line-${i}`);
-                    currentLine.classList.add('active');
-                    
-                    // Geser list agar lirik aktif di tengah
-                    const offset = -(i * 70); // 70px adalah perkiraan tinggi per baris
-                    lyricList.style.transform = `translateY(${offset}px)`;
+                    if(currentLine) {
+                        currentLine.classList.add('active');
+                        const containerHeight = document.querySelector('.lyric-container').offsetHeight;
+                        const lineOffset = currentLine.offsetTop;
+                        // Menjaga lirik tetap di tengah secara vertikal
+                        lyricList.style.transform = `translateY(${(containerHeight/2) - lineOffset - 40}px)`;
+                    }
                 }
             }
         });
