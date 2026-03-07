@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra Fast Sync - 做自己的光</title>
+    <title>Presisi Karaoke - 做自己的光</title>
     <style>
         body {
             margin: 0;
@@ -21,7 +21,7 @@
         #play-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -37,11 +37,12 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
+            box-shadow: 0 0 20px rgba(255,87,34,0.5);
         }
 
         #lyric-container {
             width: 100%;
-            height: 70vh;
+            height: 75vh;
             position: relative;
             overflow: hidden;
             display: none;
@@ -53,17 +54,17 @@
             width: 100%;
             text-align: center;
             top: 50%;
-            transition: transform 0.1s linear; /* Transisi instan */
+            transition: transform 0.1s linear;
         }
 
         .lyric-line {
-            padding: 20px 10px;
+            padding: 25px 15px;
             opacity: 0.1;
-            transition: all 0.15s ease;
+            transition: all 0.1s ease;
         }
 
-        .hanzi { display: block; font-size: 2.6rem; font-weight: bold; }
-        .latin { display: block; font-size: 1.1rem; opacity: 0.8; margin-top: 5px; }
+        .hanzi { display: block; font-size: 2.8rem; font-weight: bold; }
+        .latin { display: block; font-size: 1.2rem; opacity: 0.8; margin-top: 8px; }
 
         .active { opacity: 1 !important; transform: scale(1.1); color: #fff; text-shadow: 0 0 15px #fff; }
     </style>
@@ -71,7 +72,7 @@
 <body>
 
     <div id="play-screen" onclick="initApp()">
-        <button class="btn-start">MULAI SEKARANG</button>
+        <button class="btn-start">MULAI KARAOKE</button>
     </div>
 
     <div id="lyric-container">
@@ -88,22 +89,20 @@
         const lyricContainer = document.getElementById('lyric-container');
         const lyricList = document.getElementById('lyric-list');
 
-        // TIMING DIPERCEPAT TOTAL (Berdasarkan Audio Upload)
+        // TIMING YANG SUDAH DIPASIN (Sangat Cepat)
         const lyricData = [
-            [0.0, "不需要太阳", "bù xū yào tài yáng"],
-            [0.6, "谁说要逆风才算飞翔", "shéi shuō yào nì fēng cái suàn fēi xiáng"],
-            [4.3, "妈妈说要快乐", "mā ma shuō yào kuài lè"],
-            [7.5, "全没告诉我方法", "quán méi gào sù wǒ fāng fǎ"],
-            [10.8, "成长的小鬼为我", "chéng zhǎng de xiǎo guǐ wéi wǒ"],
-            [14.1, "时代是学不可怕", "shì dài shì xué bù kě pà"],
-            [17.3, "可怕的是里还相信这句话", "kě pà de shì lǐ hái xiāng xìn zhè jù huà"],
-            [21.6, "做自己的光", "zuò zì jǐ de guāng"],
-            [25.1, "不需要太亮", "bù xū yào tài liàng"],
-            [28.3, "谁说要逆风才算飞翔", "shéi shuō yào nì fēng cái suàn fēi xiáng"],
-            [32.0, "孤独的路上", "gū dú de lù shàng"],
-            [35.1, "还要走很长", "hái yào zǒu hěn cháng"],
-            [38.4, "成长来自不曾放弃的每一步", "chéng zhǎng lái zì bù céng fàng qì de méi mù"],
-            [43.0, "做自己的光", "zuò zì jǐ de guāng"]
+            [0.0, "枯树还没发芽", "kū shù hái méi fā yá"],
+            [1.2, "就被逼着要开花", "jiù bèi bī zhe yào kāi huā"],
+            [3.2, "妈妈说要快乐", "mā ma shuō yào kuài lè"],
+            [5.0, "却没告诉我方法", "què méi gào sù wǒ fāng fǎ"],
+            [7.0, "成长它教会我", "chéng zhǎng tā jiào huì wǒ"],
+            [8.8, "失败其实不可怕", "shī bài qí shí bù kě pà"],
+            [10.8, "可怕的是你还相信这句话", "kě pà de shì nǐ hái xiāng xìn zhè jù huà"],
+            [14.5, "做自己的光不需要太亮", "zuò zì jǐ de guāng bù xū yào tài liàng"],
+            [18.0, "谁说要逆风才算飞翔", "shéi shuō yào nì fēng cái suàn fēi xiáng"],
+            [21.5, "孤独的路上还要走很长", "gū dú de lù shàng hái yào zǒu hěn cháng"],
+            [25.0, "成长二字本来就没有偏方", "chéng zhǎng èr zì běn lái jiù méi yǒu piān fāng"],
+            [30.5, "做自己的光", "zuò zì jǐ de guāng"]
         ];
 
         lyricData.forEach((item, index) => {
