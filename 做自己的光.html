@@ -3,54 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>做自己的光 - Center Play Button</title>
+    <title>Karaoke - 做自己的光</title>
     <style>
         body {
             margin: 0;
-            background: linear-gradient(180deg, #6dd5ed 0%, #2193b0 100%);
-            color: #fff;
-            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(180deg, #1a2a6c, #b21f1f, #fdbb2d);
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
             justify-content: center;
             align-items: center;
+            font-family: 'Microsoft YaHei', sans-serif;
+            overflow: hidden;
+            color: white;
         }
 
-        /* Tombol Play Besar di Tengah */
-        #play-btn {
+        /* TOMBOL PLAY BESAR DI TENGAH */
+        #play-screen {
             position: absolute;
-            z-index: 999;
-            width: 100px;
-            height: 100px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 30px rgba(0,0,0,0.3);
-            transition: transform 0.2s, opacity 0.3s;
+            z-index: 9999; /* Memastikan paling depan */
         }
 
-        #play-btn:active { transform: scale(0.9); }
-
-        #play-btn svg {
-            fill: #2193b0;
-            width: 50px;
-            height: 50px;
+        .btn-start {
+            padding: 20px 50px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            background: #ff9800;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255,152,0,0.6);
+            animation: pulse 1.5s infinite;
         }
 
-        /* Lirik Wrapper */
-        .lyric-wrapper {
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* AREA LIRIK */
+        #lyric-container {
             width: 100%;
-            height: 80vh;
+            height: 70vh;
             position: relative;
             overflow: hidden;
-            mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-            display: none; /* Sembunyi sebelum tombol ditekan */
+            display: none; /* Sembunyi sampai tombol ditekan */
+            mask-image: linear-gradient(to bottom, transparent, black 40%, black 60%, transparent);
         }
 
         #lyric-list {
@@ -58,56 +66,43 @@
             width: 100%;
             text-align: center;
             top: 50%;
-            transition: transform 0.4s ease-out;
+            transition: transform 0.3s ease-out;
         }
 
         .lyric-line {
-            padding: 25px 10px;
+            padding: 20px 10px;
             opacity: 0.2;
             transition: all 0.4s ease;
         }
 
-        .hanzi {
-            display: block;
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+        .hanzi { display: block; font-size: 2.5rem; font-weight: bold; }
+        .latin { display: block; font-size: 1.1rem; opacity: 0.8; margin-top: 5px; }
 
-        .latin {
-            display: block;
-            font-size: 1.1rem;
-        }
-
-        .lyric-line.active {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        .active .hanzi {
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-        }
+        .active { opacity: 1 !important; transform: scale(1.1); color: #fff; text-shadow: 0 0 15px #fff; }
     </style>
 </head>
 <body>
 
-    <button id="play-btn" onclick="startMusic()">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-    </button>
+    <div id="play-screen">
+        <button class="btn-start" onclick="initApp()">MULAI LAGU</button>
+    </div>
 
-    <div class="lyric-wrapper" id="wrapper">
+    <h1 id="title" style="display:none; position:fixed; top:20px;">做自己的光</h1>
+
+    <div id="lyric-container">
         <div id="lyric-list"></div>
     </div>
 
-    <audio id="audio">
+    <audio id="myAudio">
         <source src="2174439633541359863-c.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        const audio = document.getElementById('audio');
-        const playBtn = document.getElementById('play-btn');
-        const wrapper = document.getElementById('wrapper');
-        const list = document.getElementById('lyric-list');
+        const audio = document.getElementById('myAudio');
+        const playScreen = document.getElementById('play-screen');
+        const lyricContainer = document.getElementById('lyric-container');
+        const lyricList = document.getElementById('lyric-list');
+        const title = document.getElementById('title');
 
         const lyricData = [
             [0.1, "不需要太阳", "bù xū yào tài yáng"],
@@ -126,32 +121,34 @@
             [45.3, "做自己的光", "zuò zì jǐ de guāng"]
         ];
 
-        // Fungsi saat tombol ditekan
-        function startMusic() {
-            playBtn.style.display = 'none'; // Tombol hilang
-            wrapper.style.display = 'block'; // Lirik muncul
-            audio.play(); // Musik mulai
-        }
-
-        // Render lirik
+        // RENDER LIRIK KE LAYAR
         lyricData.forEach((item, index) => {
             const div = document.createElement('div');
             div.className = 'lyric-line';
             div.id = `line-${index}`;
             div.innerHTML = `<span class="hanzi">${item[1]}</span><span class="latin">${item[2]}</span>`;
-            list.appendChild(div);
+            lyricList.appendChild(div);
         });
 
+        // FUNGSI MULAI
+        function initApp() {
+            playScreen.style.display = 'none'; // Hilangkan tombol
+            lyricContainer.style.display = 'block'; // Munculkan lirik
+            title.style.display = 'block';
+            audio.play(); // Putar musik
+        }
+
+        // UPDATE LIRIK BERDASARKAN WAKTU AUDIO
         audio.addEventListener('timeupdate', () => {
-            const time = audio.currentTime;
+            const current = audio.currentTime;
             for (let i = 0; i < lyricData.length; i++) {
-                if (time >= lyricData[i][0] && (!lyricData[i+1] || time < lyricData[i+1][0])) {
+                if (current >= lyricData[i][0] && (!lyricData[i+1] || current < lyricData[i+1][0])) {
                     document.querySelectorAll('.lyric-line').forEach(el => el.classList.remove('active'));
                     const activeLine = document.getElementById(`line-${i}`);
                     if(activeLine) {
                         activeLine.classList.add('active');
-                        const offset = -activeLine.offsetTop; 
-                        list.style.transform = `translateY(${offset}px)`;
+                        const offset = -activeLine.offsetTop;
+                        lyricList.style.transform = `translateY(${offset}px)`;
                     }
                 }
             }
