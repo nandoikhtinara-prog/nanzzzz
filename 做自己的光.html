@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zero Start Karaoke - 做自己的光</title>
+    <title>Final Sync - 做自己的光</title>
     <style>
         body {
             margin: 0;
-            background: #0f0c29; 
-            background: linear-gradient(180deg, #24243e, #0f0c29);
+            background: #1a1a2e; /* Ungu Gelap */
+            background: linear-gradient(180deg, #16213e, #1a1a2e);
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -38,16 +38,15 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(106, 17, 203, 0.5);
         }
 
         #lyric-container {
             width: 100%;
-            height: 80vh;
+            height: 75vh;
             position: relative;
             overflow: hidden;
             display: none;
-            mask-image: linear-gradient(to bottom, transparent, black 40%, black 60%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, black 35%, black 65%, transparent);
         }
 
         #lyric-list {
@@ -64,21 +63,21 @@
             transition: all 0.1s ease;
         }
 
-        .hanzi { display: block; font-size: 2.8rem; font-weight: bold; }
-        .latin { display: block; font-size: 1.2rem; opacity: 0.7; margin-top: 8px; }
+        .hanzi { display: block; font-size: 2.5rem; font-weight: bold; }
+        .latin { display: block; font-size: 1.1rem; opacity: 0.7; margin-top: 5px; }
 
         .active { 
             opacity: 1 !important; 
             transform: scale(1.1); 
             color: #00f2fe; 
-            text-shadow: 0 0 20px rgba(0, 242, 254, 0.8); 
+            text-shadow: 0 0 20px #00f2fe; 
         }
     </style>
 </head>
 <body>
 
     <div id="play-screen" onclick="initApp()">
-        <button class="btn-start">MULAI SEKARANG</button>
+        <button class="btn-start">MULAI KARAOKE</button>
     </div>
 
     <div id="lyric-container">
@@ -95,10 +94,10 @@
         const lyricContainer = document.getElementById('lyric-container');
         const lyricList = document.getElementById('lyric-list');
 
-        // TIMING INSTAN (Detik 0 langsung lirik pertama)
+        // Detik diatur agar teks muncul sedikit lebih cepat supaya pas dengan lagu
         const lyricData = [
             [0.0, "枯树还没发芽", "kū shù hái méi fā yá"],
-            [1.0, "就被逼着要开花", "jiù bèi bī zhe yào kāi huā"],
+            [0.8, "就被逼着要开花", "jiù bèi bī zhe yào kāi huā"],
             [2.8, "妈妈说要快乐", "mā ma shuō yào kuài lè"],
             [4.5, "却没告诉我方法", "què méi gào sù wǒ fāng fǎ"],
             [6.5, "成长它教会我", "chéng zhǎng tā jiào huì wǒ"],
@@ -108,7 +107,7 @@
             [17.4, "谁说要逆风才算飞翔", "shéi shuō yào nì fēng cái suàn fēi xiáng"],
             [20.9, "孤独的路上还要走很长", "gū dú de lù shàng hái yào zǒu hěn cháng"],
             [24.4, "成长二字本来就没有偏方", "chéng zhǎng èr zì běn lái jiù méi yǒu piān fāng"],
-            [29.5, "做自己的光", "zuò zì jǐ de guāng"]
+            [29.8, "做自己的光", "zuò zì jǐ de guāng"]
         ];
 
         lyricData.forEach((item, index) => {
