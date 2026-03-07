@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>做自己的光 - Bright Mode</title>
+    <style>
+        body {
+            margin: 0;
+            /* Mengubah latar belakang jadi biru cerah gradasi */
+            background: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%);
+            color: #333; /* Warna teks gelap supaya kontras */
+            font-family: 'Microsoft YaHei', sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 25px 10px;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: #00796b;
+            letter-spacing: 2px;
+        }
+
+        .lyric-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            /* Efek pudar di atas dan bawah */
+            mask-image: linear-gradient(to bottom, transparent, black 40%, black 60%, transparent);
+        }
+
+        #lyric-list {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 45%;
+            transition: transform 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+
+        .lyric-line {
+            padding: 22px 15px;
+            opacity: 0.2;
+            transition: all 0.4s ease;
+            transform: scale(0.9);
+        }
+
+        .hanzi {
+            display: block;
+            font-size: 2.3rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .latin {
+            display: block;
+            font-size: 1.1rem;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        /* Gaya saat lirik aktif */
+        .lyric-line.active {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .active .hanzi {
+            color: #00796b; /* Warna lirik aktif jadi hijau tua kebiruan */
+            text-shadow: 0 0 15px rgba(0, 121, 107, 0.3);
+        }
+
+        .player-bar {
+            padding: 25px;
+            background: white;
+            display: flex;
+            justify-content: center;
+            border-top: 1px solid #ddd;
+        }
+
+        audio {
+            width: 90%;
+            /* Audio player standar (tidak di-invert) */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>做自己的光 (Be Your Own Light)</h1>
+    </div>
+
+    <div class="lyric-wrapper">
+        <div id="lyric-list"></div>
+    </div>
+
+    <div class="player-bar">
+        <audio id="audio" controls>
+            <source src="2174439633541359863-c.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        const lyricData = [
+            [0.1, "不需要太阳", "bù xū yào tài yáng"],
+            [2.2, "谁说要逆风才算飞翔", "shéi shuō yào nì fēng cái suàn fēi xiáng"],
+            [6.1, "妈妈说要快乐", "mā ma shuō yào kuài lè"],
+            [9.4, "全没告诉我方法", "quán méi gào sù wǒ fāng fǎ"],
+            [12.8, "成长的小鬼为我", "chéng zhǎng de xiǎo guǐ wéi wǒ"],
+            [16.1, "时代是学不可怕", "shì dài shì xué bù kě pà"],
+            [19.5, "可怕的是里还相信这句话", "kě pà de shì lǐ hái xiāng xìn zhè jù huà"],
+            [23.8, "做自己的光", "zuò zì jǐ de guāng"],
+            [27.4, "不需要太亮", "bù xū yào tài liàng"],
+            [30.6, "谁说要逆风才算飞翔", "shéi shuō yào nì fēng cái suàn fēi xiáng"],
+            [34.3, "孤独的路上", "gū dú de lù shàng"],
+            [37.6, "还要走很长", "hái yào zǒu hěn cháng"],
+            [40.8, "成长来自不曾放弃的每一步", "chéng zhǎng lái zì bù céng fàng qì de méi mù"],
+            [45.3, "做自己的光", "zuò zì jǐ de guāng"]
+        ];
+
+        const list = document.getElementById('lyric-list');
+        const audio = document.getElementById('audio');
+
+        lyricData.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'lyric-line';
+            div.id = `line-${index}`;
+            div.innerHTML = `<span class="hanzi">${item[1]}</span><span class="latin">${item[2]}</span>`;
+            list.appendChild(div);
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            const time = audio.currentTime;
+            for (let i = 0; i < lyricData.length; i++) {
+                if (time >= lyricData[i][0] && (!lyricData[i+1] || time < lyricData[i+1][0])) {
+                    document.querySelectorAll('.lyric-line').forEach(el => el.classList.remove('active'));
+                    const activeLine = document.getElementById(`line-${i}`);
+                    if(activeLine) {
+                        activeLine.classList.add('active');
+                        const offset = -activeLine.offsetTop; 
+                        list.style.transform = `translateY(${offset}px)`;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
