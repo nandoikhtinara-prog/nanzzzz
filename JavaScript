@@ -1,25 +1,30 @@
 <script>
-    function addPhoto() {
-        const urlInput = document.getElementById('imageUrl');
+    function uploadPhoto() {
+        const fileInput = document.getElementById('imageInput');
         const gallery = document.querySelector('.gallery');
 
-        if (urlInput.value.trim() === "") {
-            alert("Harap masukkan link gambar terlebih dahulu!");
-            return;
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Membuat elemen galeri baru
+                const newItem = document.createElement('div');
+                newItem.className = 'gallery-item';
+                
+                // Mengambil data gambar yang baru saja dipilih
+                newItem.innerHTML = `<img src="${e.target.result}" alt="Maxwell Baru">`;
+                
+                // Menaruh foto baru di urutan paling depan
+                gallery.prepend(newItem);
+                
+                // Reset input file
+                fileInput.value = "";
+                alert("Foto berhasil ditambahkan ke tampilan!");
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            alert("Pilih foto dulu ya!");
         }
-
-        // Membuat elemen div baru untuk foto
-        const newItem = document.createElement('div');
-        newItem.className = 'gallery-item';
-
-        // Mengisi div dengan tag img
-        newItem.innerHTML = `<img src="${urlInput.value}" alt="Maxwell Salvador Baru">`;
-
-        // Menambahkan ke galeri (di urutan paling depan)
-        gallery.prepend(newItem);
-
-        // Reset input
-        urlInput.value = "";
-        alert("Foto berhasil ditambahkan ke tampilan!");
     }
 </script>
